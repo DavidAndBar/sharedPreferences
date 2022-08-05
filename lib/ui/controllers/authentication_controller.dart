@@ -22,9 +22,20 @@ class AuthenticationController extends GetxController {
 
   // para cada uno llamar los métodos del use_case authentication
 
-  Future<bool> login(user, password) async {}
+  Future<bool> login(user, password) async {
+    bool rta = await _authentication.login(user, password);
 
-  Future<bool> signup(user, password) async {}
+    _logged.value = rta;
+    return Future.value(rta);
+  }
 
-  void logout() {}
+  Future<bool> signup(user, password) async {
+    await _authentication.signup(user, password);
+    return Future.value(true);
+  }
+
+  void logout() {
+    _logged.value = false;
+    _authentication.logout();
+  }
 }
